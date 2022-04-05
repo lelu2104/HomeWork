@@ -6,34 +6,68 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class OperationsTest {
-    double a = 10;
-    double b = 2;
 
-    @Test
-    public void testAddition() {
-        Double expected = 12.0;
+    public Object[][] getAdditional() {
+        return new Object[][] {
+                {1.0, 8.0, 9.0, "Correct"},
+                {null, 8.0, 4.0, "Incorrect"},
+                {5.0, null, 4.0, "Incorrect"},
+                {-5.0, 8.0, 3.0, "Correct"},
+        };
+    }
+
+    @Test(dataProvider = "getAdditional")
+    public void testAddition(Double a, Double b, Double expected, String answer) {
         Double actual = Operations.addition(a,b);
         Assert.assertEquals(actual, expected);
+        System.out.println(answer);
     }
 
-    @Test
-    public void testSubtraction() {
-        double expected = 8;
-        double actual = Operations.subtraction(a,b);
-        Assert.assertEquals(actual, expected);
+    public Object[][] getSubtraction() {
+        return new Object[][] {
+                {10.0, 8.0, 2.0, "Correct"},
+                {null, 8.0, 4.0, "Incorrect"},
+                {5.0, null, 4.0, "Incorrect"},
+                {-5.0, 8.0, 13.0, "Correct"},
+        };
     }
 
-    @Test
-    public void testMultiplication() {
-        double expected = 20;
-        double actual = Operations.multiplication(a,b);
+    @Test(dataProvider = "getSubtraction")
+    public void testSubtraction(Double a, Double b, Double expected, String answer) {
+        Double actual = Operations.subtraction(a,b);
         Assert.assertEquals(actual, expected);
+        System.out.println(answer);
     }
 
-    @Test
-    public void testDivision() {
-        double expected = 5;
-        double actual = Operations.division(a,b);
+    public Object[][] getMultiplication() {
+        return new Object[][] {
+                {1.0, 8.0, 8.0, "Correct"},
+                {null, 8.0, 4.0, "Incorrect"},
+                {5.0, null, 4.0, "Incorrect"},
+                {-5.0, 0.0, 0.0, "Correct"},
+        };
+    }
+
+    @Test(dataProvider = "getMultiplication")
+    public void testMultiplication(Double a, Double b, Double expected, String answer) {
+        Double actual = Operations.multiplication(a,b);
         Assert.assertEquals(actual, expected);
+        System.out.println(answer);
+    }
+
+    public Object[][] getDivision() {
+        return new Object[][] {
+                {16.0, 8.0, 2.0, "Correct"},
+                {null, 8.0, 4.0, "Incorrect"},
+                {5.0, null, 4.0, "Incorrect"},
+                {-5.0, 0.0, null, "InCorrect"}, // как правильно написать
+        };
+    }
+
+    @Test(dataProvider = "getDivision")
+    public void testDivision(Double a, Double b, Double expected, String answer) {
+        Double actual = Operations.division(a,b);
+        Assert.assertEquals(actual, expected);
+        System.out.println(answer);
     }
 }
